@@ -16,6 +16,14 @@
   <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
       <a id="navbar" class="navbar-brand" href="#">Navbar</a>
+      <form class="form-inline my-2 my-lg-0">
+        <a
+          href="/.auth/login/aad"
+          class="btn btn-outline-success my-2 my-sm-0"
+          type="submit"
+          >Login</a
+        >
+      </form>
     </nav>
     <main role="main" class="container">
       <div class="starter-template">
@@ -34,9 +42,19 @@
       </div>
     </main>
     <script>
-       (async function () {
+      (async function () {
         const { text } = await (await fetch(`/api/Message`)).json();
         document.querySelector("#name").innerHTML = text;
+
+        async function getUserInfo() {
+          const response = await fetch("/.auth/me");
+          const payload = await response.json();
+          const { clientPrincipal } = payload;
+          return clientPrincipal;
+        }
+
+        let res = await getUserInfo();
+        document.querySelector("#navbar").innerHTML = res.userDetails;
       })();
     </script>
   </body>
