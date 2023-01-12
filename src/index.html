@@ -33,5 +33,11 @@
         </div>
       </div>
     </main>
+    <script>
+       (async function () {
+        const { text } = await (await fetch(`/api/Message`)).json();
+        document.querySelector("#name").innerHTML = text;
+      })();
+    </script>
   </body>
 </html>
